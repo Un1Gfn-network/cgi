@@ -1,6 +1,7 @@
 #!/bin/env python3
 
 from os import environ
+from sys import stderr
 from urllib.parse import parse_qsl
 
 print("Content-Type: text/plain; charset=utf-8")
@@ -29,6 +30,24 @@ except UnicodeError:
 except:
     print("Unexpected error:", sys.exc_info()[0])
     raise
-print(p)
+
+# https://stackoverflow.com/a/15860483
+print('\n',file=stderr)
+print(p,file=stderr)
+print('\n',file=stderr)
+
+# https://stackoverflow.com/q/5574702
+# https://stackoverflow.com/a/37376668
+# from os import write
+# write(2,b"\n")
+# write(2,p[0][0].encode())
+# write(2,b"\n")
+# write(2,p[0][1].encode())
+# write(2,b"\n")
+# write(2,b"\n")
+
+print('OK')
 print()
+
+# for i in p:
 
