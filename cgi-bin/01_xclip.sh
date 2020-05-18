@@ -2,7 +2,7 @@
 
 source 00_rc
 
-A
+P
 
 echo '[PRIMARY]'
 echo
@@ -12,7 +12,7 @@ echo
 # env DISPLAY=:0.0 xclip -o -selection primary | perl -MHTML::Entities -pe 'decode_entities($_);'
 # https://stackoverflow.com/a/56491238
 # http://xmlstar.sourceforge.net/doc/UG/xmlstarlet-ug.html#idm47077139540960
-env DISPLAY=:0.0 xclip -o -selection primary | xmlstarlet esc
+env DISPLAY=:0.0 xclip -o -selection primary
 # echo $?
 
 echo
@@ -21,9 +21,9 @@ echo
 
 echo '[CLIPBOARD]'
 echo
-env DISPLAY=:0.0 xclip -o -selection clipboard | xmlstarlet esc
+env DISPLAY=:0.0 xclip -o -selection clipboard
 # echo $?
 echo
 echo
 
-B
+# B
