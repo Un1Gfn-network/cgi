@@ -2,10 +2,19 @@
 
 ```bash
 # busybox httpd -f -vv -p 8080 -h /home/darren/ios/
-sudo busybox httpd -f -vv -p 80 -h . -c ./httpd.conf 
+sudo busybox httpd -f -vv -p 80 -h . -c ./httpd.conf
 # sudo busybox httpd -f -vv -p 80 -u root:root -h /home/darren/cm-exp01 -c /home/darren/cm-exp01/httpd.conf
 ```
 
+```bash
+function getsrv {
+  curl -s --proxy 'socks5://127.0.0.1:1080' -I "$1" | grep -i serv
+}
+getsrv 'https://www.gnu.org/'     # Apache/2.4.7
+getsrv 'https://git.busybox.net/' # Apache
+getsrv 'https://www.kernel.org/'  # nginx
+getsrv 'https://duckduckgo.org/'  # nginx
+```
 
 
 
