@@ -7,6 +7,10 @@ sudo busybox httpd -f -vv -p 80 -h . -c ./httpd.conf
 ```
 
 ```bash
+dir.sh
+```
+
+```bash
 function getsrv {
   curl -s --proxy 'socks5://127.0.0.1:1080' -I "$1" | grep -i serv
 }
