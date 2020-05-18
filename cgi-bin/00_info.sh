@@ -17,5 +17,3 @@ echo
 
 date
 echo
-
-# B
