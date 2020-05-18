@@ -14,8 +14,10 @@ print()
 # print("QUERY_STRING = '%s'" % environ['QUERY_STRING'])
 # print()
 
+# https://docs.python.org/3/tutorial/errors.html
 try:
     p=parse_qsl(
+        # https://stackoverflow.com/questions/4906977
         environ['QUERY_STRING'],
         keep_blank_values=True,
         strict_parsing=True,
