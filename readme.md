@@ -1,3 +1,14 @@
+[httpd.conf reference](https://git.busybox.net/busybox/tree/networking/httpd.c)
+
+```bash
+# busybox httpd -f -vv -p 8080 -h /home/darren/ios/
+sudo busybox httpd -f -vv -p 80 -h . -c ./httpd.conf 
+# sudo busybox httpd -f -vv -p 80 -u root:root -h /home/darren/cm-exp01 -c /home/darren/cm-exp01/httpd.conf
+```
+
+
+
+
 
 [http.server](https://docs.python.org/3/library/http.server.html#http-server-cli)
 ```bash
