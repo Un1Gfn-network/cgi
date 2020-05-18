@@ -8,11 +8,11 @@ print("Content-Type: text/plain; charset=utf-8")
 print()
 
 # print('Hello 歡迎')
-print("REQUEST_URI  = '%s'" % environ['REQUEST_URI'])
-print()
+# print("REQUEST_URI  = '%s'" % environ['REQUEST_URI'])
+# print()
 
-print("QUERY_STRING = '%s'" % environ['QUERY_STRING'])
-print()
+# print("QUERY_STRING = '%s'" % environ['QUERY_STRING'])
+# print()
 
 try:
     p=parse_qsl(
@@ -33,13 +33,16 @@ except:
 
 # https://stackoverflow.com/a/15860483
 # https://docs.python.org/3/library/functions.html#print
-def eprint(x):
-    print(x,file=stderr)
-eprint('\n')
-eprint(p)
-eprint('\n')
-# for i in p:
-#     print
+# https://docs.python.org/3/glossary.html#keyword-only-parameter
+def eprint(*x):
+    print(*x,file=stderr)
+eprint()
+for i in p:
+    eprint("[%s]"%i[0])
+    eprint()
+    eprint(i[1])
+    eprint()
+    eprint()
 
 # https://stackoverflow.com/q/5574702
 # https://stackoverflow.com/a/37376668
