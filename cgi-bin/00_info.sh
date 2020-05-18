@@ -12,6 +12,9 @@ echo
 env
 echo
 
+id
+echo
+
 uname -a
 echo
 

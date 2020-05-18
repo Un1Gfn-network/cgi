@@ -16,4 +16,5 @@ function quit {
 trap quit SIGINT
 
 ./cgi-bin/00_redir.sh
-sudo busybox httpd -f -vv -p 80 -h . -c ./httpd.conf
+
+sudo busybox httpd -f -vv -p 80 -u darren:darren -h . -c ./httpd.conf
