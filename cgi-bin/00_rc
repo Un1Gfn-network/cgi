@@ -1,5 +1,12 @@
 #!/dev/null
 
+function P {
+
+  echo 'Content-type: text/plain'
+  echo
+
+}
+
 function A {
 
   echo "Content-type: text/html"

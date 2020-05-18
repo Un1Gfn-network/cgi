@@ -1,8 +1,7 @@
 #!/bin/bash
 
 source 00_rc
-
-A
+P
 
 echo 'Hello World'
 echo
@@ -19,4 +18,4 @@ echo
 date
 echo
 
-B
+# B
