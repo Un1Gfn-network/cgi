@@ -1,26 +1,27 @@
 #!/bin/bash
 
 echo "Content-type: text/html"
-echo ""
+echo
 
 echo '<html>'
 echo '<head>'
 echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">'
-echo '<title>Hello World</title>'
+echo '<title>Title</title>'
 echo '</head>'
 echo '<body>'
 
-echo '<br>'
+echo '<pre style="word-wrap: break-word; white-space: pre-wrap;">'
 
-echo 'Hello World<br>'
-echo '<br>'
+echo 'Hello World'
+echo
 
-uname -a; echo '<br>'
-echo '<br>'
+uname -a
+echo
 
-date; echo '<br>'
-echo '<br>'
+date
+echo
 
+echo '</pre>'
 echo '</body>'
 echo '</html>'
 
