@@ -32,9 +32,14 @@ except:
     raise
 
 # https://stackoverflow.com/a/15860483
-print('\n',file=stderr)
-print(p,file=stderr)
-print('\n',file=stderr)
+# https://docs.python.org/3/library/functions.html#print
+def eprint(x):
+    print(x,file=stderr)
+eprint('\n')
+eprint(p)
+eprint('\n')
+# for i in p:
+#     print
 
 # https://stackoverflow.com/q/5574702
 # https://stackoverflow.com/a/37376668
