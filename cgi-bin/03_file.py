@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 # https://www.tutorialspoint.com/How-do-we-do-a-file-upload-using-Python-CGI-Programming
+# https://stackoverflow.com/questions/40280267/file-upload-using-python-with-cgi
 
 from cgi import FieldStorage
 from os.path import basename

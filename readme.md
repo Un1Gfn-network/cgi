@@ -1,5 +1,7 @@
 [httpd.conf reference](https://git.busybox.net/busybox/tree/networking/httpd.c)
 
+http://httpbin.org/
+
 ```bash
 # busybox httpd -f -vv -p 8080 -h /home/darren/ios/
 sudo busybox httpd -f -vv -p 80 -h . -c ./httpd.conf
