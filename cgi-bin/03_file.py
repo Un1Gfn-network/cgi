@@ -1,23 +1,36 @@
 #!/usr/bin/python
-import cgi, os
-import cgitb; cgitb.enable()
-form = cgi.FieldStorage()
-# Get filename here.
+
+# https://www.tutorialspoint.com/How-do-we-do-a-file-upload-using-Python-CGI-Programming
+
+from cgi import FieldStorage
+from os.path import basename
+# from os.path import basename
+from cgitb import enable
+from sys import stderr
+
+enable()
+form = FieldStorage()
 fileitem = form['filename']
-# Test if the file was uploaded
+
 if fileitem.filename:
-   # strip leading path from file name to avoid
-   # directory traversal attacks
-   fn = os.path.basename(fileitem.filename)
+   # Mitigate directory traversal attack
+   fn = basename(fileitem.filename)
    open('/tmp/' + fn, 'wb').write(fileitem.file.read())
-   message = 'The file "' + fn + '" was uploaded successfully'
+   # message = 'The file "' + fn + '" was uploaded successfully'
+   message = "  '%s' -> '/tmp/%s'" % ( fn, fn )
 else:
    message = 'No file was uploaded'
 
 print("Content-Type: text/plain; charset=utf-8")
 print()
 
+print()
 print(message)
+print()
+
+print(file=stderr)
+print(message,file=stderr)
+print(file=stderr)
 
 # for line in stdin:
 #     print(line)
