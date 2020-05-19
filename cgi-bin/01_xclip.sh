@@ -6,6 +6,7 @@ P
 
 echo '[CLIPBOARD]'
 echo
+echo
 env DISPLAY=:0.0 xclip -o -selection clipboard
 # echo $?
 echo
@@ -17,6 +18,7 @@ echo
 
 echo '[PRIMARY]'
 echo
+echo
 # https://stackoverflow.com/a/35040213
 # env DISPLAY=:0.0 xclip -o -selection primary | recode ascii..html
 # https://stackoverflow.com/a/13161719
@@ -24,6 +26,8 @@ echo
 # https://stackoverflow.com/a/56491238
 # http://xmlstar.sourceforge.net/doc/UG/xmlstarlet-ug.html#idm47077139540960
 env DISPLAY=:0.0 xclip -o -selection primary
+echo
+echo
 # echo $?
 
 # B
