@@ -1,18 +1,23 @@
 #!/bin/env python3
 
 from os import environ
-from sys import stderr
+from sys import stdin,stderr
 from urllib.parse import parse_qsl
+import sys
+
 
 print("Content-Type: text/plain; charset=utf-8")
 print()
 
-# print('Hello 歡迎')
-# print("REQUEST_URI  = '%s'" % environ['REQUEST_URI'])
-# print()
 
-# print("QUERY_STRING = '%s'" % environ['QUERY_STRING'])
-# print()
+print('Hello 歡迎')
+print()
+
+print("REQUEST_URI  = '%s'" % environ['REQUEST_URI'])
+print()
+
+print("QUERY_STRING = '%s'" % environ['QUERY_STRING'])
+print()
 
 # https://docs.python.org/3/tutorial/errors.html
 try:
@@ -56,7 +61,7 @@ for i in p:
 # write(2,b"\n")
 # write(2,b"\n")
 
-print('OK')
+print('OK. Please check busybox httpd console.')
 print()
 
 # for i in p:
