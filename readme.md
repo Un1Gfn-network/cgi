@@ -1,3 +1,12 @@
+Stunnel
+
+```bash
+su -
+rm -fv /etc/stunnel/selfsigned*
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/stunnel/selfsigned.key -out /etc/stunnel/selfsigned.pem
+ls -l /etc/stunnel/selfsigned*
+```
+
 [httpd.conf reference](https://git.busybox.net/busybox/tree/networking/httpd.c)
 
 http://httpbin.org/
@@ -21,9 +30,6 @@ getsrv 'https://git.busybox.net/' # Apache
 getsrv 'https://www.kernel.org/'  # nginx
 getsrv 'https://duckduckgo.org/'  # nginx
 ```
-
-
-
 
 [http.server](https://docs.python.org/3/library/http.server.html#http-server-cli)
 ```bash

@@ -1,20 +1,27 @@
 #!/bin/bash
 
-if [ -e index.html ]; then
-  echo
-  echo -n "  overwrite index.html? "; read -r
-  echo
-  R="$?"
-  [ "$R" -eq 0 ] || exit "$R"
-fi
-
 function quit {
-  echo
-  rm -fv index.html
+  sudo killall stunnel
+  sudo killall busybox
+  exit 1
 }
 
 trap quit SIGINT
 
+cd /home/darren/cgi
+
+if [ -e index.html ]; then
+  echo
+  echo -n "  overwrite index.html? "
+  read -r
+fi
+
 ./cgi-bin/00_redir.sh
 
-sudo busybox httpd -f -vv -p 80 -u darren:darren -h . -c ./httpd.conf
+echo -e "\033]0;httpd\007"
+
+sudo /bin/true
+
+parallel --line-buffer ::: 'sudo busybox httpd -f -vv -p 127.0.0.1:80 -u darren:darren -h /home/darren/cgi -c /etc/httpd.conf' 'sudo stunnel /etc/stunnel/stunnel.conf'
+
+echo -e "\033]0;Alacritty\007"

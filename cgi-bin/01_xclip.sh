@@ -4,11 +4,13 @@ source 00_rc
 
 P
 
+export XAUTHORITY=/home/darren/.Xauthority
+export DISPLAY=:0.0
+
 echo '[CLIPBOARD]'
 echo
 echo
-env DISPLAY=:0.0 xclip -o -selection clipboard
-# echo $?
+xclip -o -selection clipboard
 echo
 echo
 
@@ -25,9 +27,8 @@ echo
 # env DISPLAY=:0.0 xclip -o -selection primary | perl -MHTML::Entities -pe 'decode_entities($_);'
 # https://stackoverflow.com/a/56491238
 # http://xmlstar.sourceforge.net/doc/UG/xmlstarlet-ug.html#idm47077139540960
-env DISPLAY=:0.0 xclip -o -selection primary
+xclip -o -selection primary
 echo
 echo
-# echo $?
 
 # B

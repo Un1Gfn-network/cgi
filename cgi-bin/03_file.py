@@ -16,9 +16,9 @@ fileitem = form['filename']
 if fileitem.filename:
    # Mitigate directory traversal attack
    fn = basename(fileitem.filename)
-   open('/home/darren/cgi/tmp/' + fn, 'wb').write(fileitem.file.read())
+   open('/home/darren/cgi/cgi-tmp/' + fn, 'wb').write(fileitem.file.read())
    # message = 'The file "' + fn + '" was uploaded successfully'
-   message = "  '%s' -> '/home/darren/cgi/tmp/%s'" % ( fn, fn )
+   message = "  '%s' -> '/home/darren/cgi/cgi-tmp/%s'" % ( fn, fn )
 else:
    message = 'No file was uploaded'
 
