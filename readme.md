@@ -3,7 +3,7 @@ Stunnel
 ```bash
 su -
 rm -fv /etc/stunnel/selfsigned*
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/stunnel/selfsigned.key -out /etc/stunnel/selfsigned.pem
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/stunnel/selfsigned.key -out /etc/stunnel/selfsigned.crt
 ls -l /etc/stunnel/selfsigned*
 ```
 
