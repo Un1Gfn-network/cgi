@@ -1,3 +1,31 @@
+```
+———
+move existing Un1Gfn-network/cgi to Un1Gfn-network/cgi-legacy
+create new Un1Gfn-network/cgi
+———
+https://github.com/boutell/cgic
+https://stackoverflow.com/q/2265038
+Makefile pie libcgic.so pkg-config cgic.pc
+———
+https://github.com/boazsegev/facil.io
+https://facil.io/
+submit to AUR
+———
+https://aur.archlinux.org/packages/kore/
+https://github.com/jorisvink/kore
+https://kore.io/
+———
+https://aur.archlinux.org/packages/kcgi
+https://github.com/kristapsdz/kcgi
+https://kristaps.bsd.lv/kcgi
+———
+https://github.com/search?l=C&o=desc&q=web+framework&s=stars&type=Repositories
+https://github.com/search?l=C&o=desc&q=cgi&s=stars&type=Repositories
+———
+https://developer.mozilla.org/docs/Learn/Forms
+———
+```
+
 Stunnel
 
 ```bash
