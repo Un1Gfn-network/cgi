@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>holoplay ホロプレイ</title>
+  <style type="text/css">
+    * {
+      font-family: Monospace;
+    }
+  </style>
+  <!--
+    https://stackoverflow.com/a/14174624/8243991
+    inkscape -w 1024 -h 1024 media-playback-start-symbolic.svg -o apple-touch-icon.png
+  -->
+  <link rel="apple-touch-icon" href="/html/holoplay.d/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/html/holoplay.d/apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" href="/html/holoplay.d/apple-touch-icon.png">
+</head>
+<body>
+
+<br>
+
+<form action="/cgi-bin/holoplay.py" method="GET">
+
+  <!-- pwgen -sA 8 1 -->
+
+  <!-- https://mpv.io/manual/stable/#command-interface-quit-%5B%3Ccode%3E%5D -->
+  <input type="submit" name="ef1lc1gh" value="QUIT"><br><br>
+
+  <!-- https://mpv.io/manual/stable/#command-interface-keypress-%3Cname%3E -->
+  <!-- https://mpv.io/manual/stable/#keyboard-control -->
+  <input type="submit" name="7bqpv0dq" value="PAUSE/RESUME"><br><br>
+
+  <input type="submit" name="gf3dqjhn" value="REPLAY"><br><br>
+
+  <!-- https://developers.google.com/cast/docs/media#mp4_video_and_audio -->
+  <!-- https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter -->
+  <input type="radio" id="7o14wu80" name="m346bpv6" value="upcl8r46"><!--           --><label for="7o14wu80"> 144p30 HE-AAC</label><br>
+  <input type="radio" id="a1orv215" name="m346bpv6" value="b4bk2eut"><!--           --><label for="a1orv215"> 240p30 HE-AAC</label><br>
+  <input type="radio" id="w95da4vi" name="m346bpv6" value="28fh6pym"><!--           --><label for="w95da4vi"> 360p30 AAC-LC</label><br>
+  <input type="radio" id="8e58tttf" name="m346bpv6" value="87spj9m8"><!--           --><label for="8e58tttf"> 480p30 AAC-LC</label><br>
+  <input type="radio" id="8ak0a7xv" name="m346bpv6" value="q5vewy44"><!--           --><label for="8ak0a7xv"> 720p60 AAC-LC</label><br>
+  <input type="radio" id="74wfkzf0" name="m346bpv6" value="t2gic9ya" checked="garbage"><label for="74wfkzf0">1080p60 AAC-LC</label><br>
+  <textarea name="m346bpv6" rows="1" cols="33"></textarea><br>
+  <input type="submit" name="sc40lpz5" value="PLAY"><br>
+  <br>
+
+</form>
+
+</body>
+</html>

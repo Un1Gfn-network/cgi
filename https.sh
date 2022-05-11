@@ -1,4 +1,4 @@
-#!/dev/null
+#!/bin/bash
 
 function quit {
   sudo iptables -F INPUT

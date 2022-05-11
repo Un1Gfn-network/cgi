@@ -1,8 +1,5 @@
 ```
 ———
-move existing Un1Gfn-network/cgi to Un1Gfn-network/cgi-legacy
-create new Un1Gfn-network/cgi
-———
 https://github.com/boutell/cgic
 https://stackoverflow.com/q/2265038
 Makefile pie libcgic.so pkg-config cgic.pc
@@ -29,25 +26,13 @@ https://developer.mozilla.org/docs/Learn/Forms
 Stunnel
 
 ```bash
-su -
 rm -fv /etc/stunnel/selfsigned*
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/stunnel/selfsigned.key -out /etc/stunnel/selfsigned.crt
-ls -l /etc/stunnel/selfsigned*
 ```
 
 [httpd.conf reference](https://git.busybox.net/busybox/tree/networking/httpd.c)
 
 http://httpbin.org/
-
-```bash
-# busybox httpd -f -vv -p 8080 -h /home/darren/ios/
-sudo busybox httpd -f -vv -p 80 -h . -c ./httpd.conf
-# sudo busybox httpd -f -vv -p 80 -u root:root -h /home/darren/cm-exp01 -c /home/darren/cm-exp01/httpd.conf
-```
-
-```bash
-dir.sh
-```
 
 ```bash
 function getsrv {
@@ -60,21 +45,13 @@ getsrv 'https://duckduckgo.org/'  # nginx
 ```
 
 [http.server](https://docs.python.org/3/library/http.server.html#http-server-cli)
+
 ```bash
 sudo python -m http.server 80
 ```
 
-zip -s 50m PacketTracer-7.3.0.zip PacketTracer-7.3.0-win64-setup.exe
-zip -P 'CaiXuKun' PacketTracer-7.3.0.zip PacketTracer-7.3.0-win64-setup.exe
-
-
-[libimobiledevice](http://www.libimobiledevice.org/)
-* [cgit](https://cgit.libimobiledevice.org/)
-* [ArchWiki](https://wiki.archlinux.org/index.php/IOS)
-* [gio mount](https://forums.linuxmint.com/viewtopic.php?t=275682)
-* [Debian Wiki](https://wiki.debian.org/iPhone#mount-iphone.sh_script)
-
 Mount
+
 ```bash
 lsusb -v -d 05ac:12ab
 idVendor=$(lsusb -v 2>/dev/null | awk '/idVendor.*Apple/{print $2; exit}')

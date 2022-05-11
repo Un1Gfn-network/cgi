@@ -1,2 +1,3 @@
 /index.html
-/cgi-tmp
+/00_cgi_tmp
+/cgi-bin/__pycache__/

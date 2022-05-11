@@ -31,9 +31,9 @@ try:
         max_num_fields=None
     )
 except ValueError:
-    print ("ValueError")
+    print("ValueError")
 except UnicodeError:
-    print ("UnicodeError")
+    print("UnicodeError")
 except:
     print("Unexpected error:", sys.exc_info()[0])
     raise
