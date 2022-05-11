@@ -92,28 +92,50 @@ def main():
     print_server()
 
     d = parse()
+
     if "ef1lc1gh" in d:
         kill()
         print_server()
         return
+
     if "gf3dqjhn" in d:
         kill()
         print_server()
         with open(HIST, 'r') as f:
             d['m346bpv6'][1] = f.readlines()[-1]
-            # print_server("A", d['m346bpv6'][1])
         play(d)
         return
-    elif "sc40lpz5" in d:
+
+    if "sc40lpz5" in d:
         kill()
         print_server()
         play(d)
         print_server()
-    else:
-        raise NotImplementedError
+        return
+
+    raise NotImplementedError
+
 
 if __name__ == "__main__":
     main()
+
+
+# if 'sz3nb58f' in d:
+#     # https://stackoverflow.com/questions/51501029/how-to-run-part-of-code-as-different-user-in-linux-with-python
+#     with UnixUser(1000):
+#         with pulsectl.Pulse('hololive-pulse-client') as p:
+#             s = p.sink_list()
+#             assert len(s) == 1
+#             s = s[0]
+#             assert s.name == p.server_info().default_sink_name
+#             print_html(p.volume_get_all_chans(s))
+#             print(pulse.volume_get_all_chans(s))
+
+# if 'sz3nb58f' in d:
+# with UnixUser(1000):
+#     with pulsectl.Pulse('hololive-pulse-client') as p:
+#             # ...
+#             pulse.volume_set_all_chans(s,0.78)
 
 # print_server(d)
 # for i in d:
