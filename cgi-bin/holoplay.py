@@ -8,6 +8,8 @@ import pprint
 # sys.path.insert(1, '/path/to/application/app/folder')
 import ytdlp2
 
+HIST = "/tmp/holoplay"
+
 print_html = print
 
 # https://stackoverflow.com/a/15860483
@@ -68,13 +70,17 @@ def play(d):
     fmt['format'] = f"{fmt['format_id']} - {fmt['resolution']}"
 
     # validate url
-    assert type(t[1]) == str
-    t[1] = ytdlp2.validate(t[1])
-    assert t[1]
+    u = t[1]
+    assert type(u) == str
+    u = ytdlp2.validate(u)
+    assert u
 
     # start watching
     ytdlp2.init()
-    ytdlp2.watch(fmt, t[1])
+    print_server()
+    with open(HIST, 'a') as f:
+        print(u, file=f)
+    ytdlp2.watch(fmt, u)
 
 
 def main():
@@ -89,6 +95,14 @@ def main():
     if "ef1lc1gh" in d:
         kill()
         print_server()
+        return
+    if "gf3dqjhn" in d:
+        kill()
+        print_server()
+        with open(HIST, 'r') as f:
+            d['m346bpv6'][1] = f.readlines()[-1]
+            # print_server("A", d['m346bpv6'][1])
+        play(d)
         return
     elif "sc40lpz5" in d:
         kill()

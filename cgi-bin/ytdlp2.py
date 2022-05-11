@@ -31,27 +31,22 @@ def eprint(*x):
 
 def run_as_user(args):
 
-    r = pwd.getpwnam(USER)
-
     # https://stackoverflow.com/a/6037494/
     # https://docs.python.org/3/library/subprocess.html#subprocess.Popen
     # process = subprocess.Popen(args=args, preexec_fn=demote(r.pw_uid, r.pw_gid), cwd="/tmp", env=dict())
-
+    r = pwd.getpwnam(USER)
     g0, u0 = os.getgid(), os.getuid()
     os.setgid(r.pw_gid)
     os.setuid(r.pw_uid)
     os.environ.clear()
-    newenv = {
+    subprocess.run(args=args, stdout=sys.stderr, stderr=sys.stderr, cwd="/tmp", env=PROXYENV | {
         'DISPLAY': ":0.0",
         'HOME': f"/home/{USER}",
         'LOGNAME': USER,
         'PWD': "/tmp",
         'USER': USER,
         'XDG_RUNTIME_DIR': f"/run/user/{r.pw_uid}"
-    }
-    newenv.update(PROXYENV)
-    eprint(newenv)
-    subprocess.run(args=args, stdout=sys.stderr, stderr=sys.stderr, cwd="/tmp", env=newenv)
+    })
     os.setgid(g0)
     os.setuid(u0)
 
@@ -78,6 +73,7 @@ def watch(fmt: dict, url: str):
     assert ytdlpobj
     # with contextlib.redirect_stdout(sys.stderr):
     i = ytdlpobj.extract_info(url, download=False)
+    eprint()
 
     assert i['is_live']
     assert i['live_status'] == "is_live"
@@ -102,15 +98,14 @@ def watch(fmt: dict, url: str):
     # https://pythonguides.com/python-epoch-to-datetime/
     start = datetime.datetime.fromtimestamp(i['release_timestamp'])
     mins = int((datetime.datetime.now() - start).total_seconds() / 60)
-    eprint(f":: {mins} min, since {start}")
-    eprint()
+    eprint(f":: {mins} min, since {start}", "\n")
 
     args = ["/usr/bin/mpv",
             "--hwdec=vaapi",
             "--vo=vaapi", "--no-osc", "--no-osd-bar",
             f"--title=tv",
             m3u8]
-    eprint(":;", *args, "")
+    eprint(":;", *args, "\n")
     run_as_user(args)
 
     # https://stackoverflow.com/questions/13432717/enter-interactive-mode-in-python
