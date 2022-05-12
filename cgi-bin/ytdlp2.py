@@ -1,9 +1,7 @@
 #!/bin/python3
 
 import datetime
-import os
 import pprint
-import pwd
 import re
 import subprocess
 import sys
@@ -12,43 +10,10 @@ import yt_dlp
 # JSON = "/tmp/ytdlp.json"
 
 ytdlpobj = None
-USER = "darren"
-
-PROXY = "http://127.0.0.1:8080"
-PROXYENV = {
-    'all_proxy': PROXY,
-    'ALL_PROXY': PROXY,
-    'http_proxy': PROXY,
-    'HTTP_PROXY': PROXY,
-    'https_proxy': PROXY,
-    'HTTPS_PROXY': PROXY,
-    'no_proxy': "localhost,127.0.0.1,localaddress,.localdomain.com",
-}
 
 def eprint(*x):
 
     print(*x,file=sys.stderr)
-
-def run_as_user(args):
-
-    # https://stackoverflow.com/a/6037494/
-    # https://docs.python.org/3/library/subprocess.html#subprocess.Popen
-    # process = subprocess.Popen(args=args, preexec_fn=demote(r.pw_uid, r.pw_gid), cwd="/tmp", env=dict())
-    r = pwd.getpwnam(USER)
-    g0, u0 = os.getgid(), os.getuid()
-    os.setgid(r.pw_gid)
-    os.setuid(r.pw_uid)
-    os.environ.clear()
-    subprocess.run(args=args, stdout=sys.stderr, stderr=sys.stderr, cwd="/tmp", env=PROXYENV | {
-        'DISPLAY': ":0.0",
-        'HOME': f"/home/{USER}",
-        'LOGNAME': USER,
-        'PWD': "/tmp",
-        'USER': USER,
-        'XDG_RUNTIME_DIR': f"/run/user/{r.pw_uid}"
-    })
-    os.setgid(g0)
-    os.setuid(u0)
 
 
 def validate(url: str):
@@ -101,20 +66,20 @@ def watch(fmt: dict, url: str):
     eprint(f":: {mins} min, since {start}", "\n")
 
     args = ["/usr/bin/mpv",
+            "--pause",
+            "--no-resume-playback",
             "--hwdec=vaapi",
             "--vo=vaapi", "--no-osc", "--no-osd-bar",
             f"--title=tv",
             m3u8]
     eprint(":;", *args, "\n")
-    run_as_user(args)
+    subprocess.run(args, stdout=sys.stderr)
 
     # https://stackoverflow.com/questions/13432717/enter-interactive-mode-in-python
     # code.interact(local=locals())
 
 
 def init():
-
-    os.environ.update(PROXYENV)
 
     global ytdlpobj
     # with contextlib.redirect_stdout(sys.stderr):
@@ -125,21 +90,6 @@ def init():
         'cookiesfrombrowser': ('chromium',)
     },auto_init=True)
 
-
-# def get_device():
-
-#     global device
-#     if 'DISPLAY' in os.environ:
-#         assert os.environ['DISPLAY'] == ":0.0" or ":0"
-#         assert os.environ['XDG_RUNTIME_DIR'] == "/run/user/1000"
-#         device = '820g3'
-#     else:
-#         device = 'x200'
-
-#     print("device "+device)
-
-
-# def garbage():
 
 # jq -C </tmp/ytdlp.json | less -RM +%
 # jq -C </tmp/ytdlp.json 'del(.formats[].fragments)' | less -RM +%

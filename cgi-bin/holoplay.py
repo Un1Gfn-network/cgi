@@ -1,16 +1,20 @@
 #!/bin/python3
 
 import os
+import pprint
+import pwd
+import subprocess
 import sys
 import urllib.parse
-import pprint
 
 # sys.path.insert(1, '/path/to/application/app/folder')
 import ytdlp2
 
-HIST = "/tmp/holoplay"
+HIST = "/home/darren/.holoplay"
+USER = "darren"
 
 print_html = print
+
 
 # https://stackoverflow.com/a/15860483
 # https://docs.python.org/3/library/functions.html#print
@@ -37,10 +41,50 @@ def parse():
     )
 
 
+def dropuser():
+
+    # https://stackoverflow.com/a/6037494/
+    # https://docs.python.org/3/library/subprocess.html#subprocess.Popen
+    g, u, r = os.getgid(), os.getuid(), pwd.getpwnam(USER)
+
+    # drop privilege
+    if (g, u) != (r.pw_gid, r.pw_uid):
+        assert (g, u) == (0, 0)
+        os.setgid(r.pw_gid)
+        os.setuid(r.pw_uid)
+
+
+def env():
+
+    os.environ.clear()
+    proxy = "http://127.0.0.1:8080"
+    os.environ |= {
+        'all_proxy': proxy,
+        'ALL_PROXY': proxy,
+        'http_proxy': proxy,
+        'HTTP_PROXY': proxy,
+        'https_proxy': proxy,
+        'HTTPS_PROXY': proxy,
+        'no_proxy': ','.join(["127.0.0.0/8",
+                              "192.168.0.0/24",
+                              "localaddress",
+                              "localhost",
+                              ".localdomain.com"])
+    }
+    os.environ |= {
+        'DISPLAY': ":0.0",
+        'HOME': f"/home/{USER}",
+        'LOGNAME': USER,
+        'PWD': "/tmp",
+        'USER': USER,
+        'XDG_RUNTIME_DIR': f"/run/user/{pwd.getpwnam(USER).pw_uid}"
+    }
+
+
 def kill():
 
-    ytdlp2.run_as_user(args=["/usr/bin/killall", "ffplay"])
-    ytdlp2.run_as_user(args=["/usr/bin/killall", "mpv"])
+   subprocess.run(["/usr/bin/killall", "ffplay"], stdout=sys.stderr)
+   subprocess.run(["/usr/bin/killall", "mpv"], stdout=sys.stderr)
 
 
 def play(d):
@@ -92,6 +136,8 @@ def main():
     print_server()
 
     d = parse()
+    dropuser()
+    env()
 
     if "ef1lc1gh" in d:
         kill()
