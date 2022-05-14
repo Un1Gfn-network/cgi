@@ -16,20 +16,24 @@ def eprint(*x):
     print(*x,file=sys.stderr)
 
 
-def validate(url: str):
+def canonicalize(url):
+
+    assert type(url) == str
+
+    # https://docs.python.org/3/library/re.html#regular-expression-syntax
 
     # video id only
-    if bool(re.match(r"^[A-Za-z0-9_-]{11}$", url)):
+    if re.match(r"^[A-Za-z0-9_-]{11}\Z", url):
         return f"https://www.youtube.com/watch?v={url}"
 
-    # full-blown url
+    # full url
     if (False
-        or bool(re.match(r"^https://youtu.be/[A-Za-z0-9_-]{11}$", url))
-        or bool(re.match(r"^https://www.youtube.com/watch\?v=[A-Za-z0-9_-]{11}$", url))
+        or re.match(r"^https://youtu.be/[A-Za-z0-9_-]{11}\Z", url)
+        or re.match(r"^https://www.youtube.com/watch\?v=[A-Za-z0-9_-]{11}\Z", url)
     ):
         return url
 
-    return False
+    return str("")
 
 
 def watch(fmt: dict, url: str):
@@ -38,11 +42,16 @@ def watch(fmt: dict, url: str):
     assert ytdlpobj
     # with contextlib.redirect_stdout(sys.stderr):
     i = ytdlpobj.extract_info(url, download=False)
+    print()
     eprint()
 
-    assert i['is_live']
-    assert i['live_status'] == "is_live"
-    assert not i['was_live']
+    if (False
+        or not i['is_live']
+        or i['was_live']
+        or i['live_status'] != "is_live"
+    ):
+        print("not live\n")
+        return
 
     if 'thumbnails' in i:
         i['thumbnails'] = { "...": "..." }
@@ -69,7 +78,7 @@ def watch(fmt: dict, url: str):
             "--pause",
             "--no-resume-playback",
             "--hwdec=vaapi",
-            "--vo=vaapi", "--no-osc", "--no-osd-bar",
+            # "--vo=vaapi", "--no-osc", "--no-osd-bar",
             f"--title=tv",
             m3u8]
     eprint(":;", *args, "\n")
@@ -126,14 +135,14 @@ def init():
 #     print()
 
 # if 2 == len(sys.argv):
-#     u = validate(sys.argv[1])
+#     u = canonicalize(sys.argv[1])
 #     if u:
 #         watch(y, u)
 # else:
 #     assert 1 == len(sys.argv)
 #     while True:
 #         try:
-#             u = validate(input("youtube_url> "))
+#             u = canonicalize(input("youtube_url> "))
 #         except EOFError:
 #             print()
 #             print()

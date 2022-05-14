@@ -114,17 +114,15 @@ def play(d):
     fmt['format'] = f"{fmt['format_id']} - {fmt['resolution']}"
 
     # validate url
-    u = t[1]
-    assert type(u) == str
-    u = ytdlp2.validate(u)
-    assert u
+    url = ytdlp2.canonicalize(t[1])
+    assert url
 
     # start watching
     ytdlp2.init()
     print_server()
     with open(HIST, 'a') as f:
-        print(u, file=f)
-    ytdlp2.watch(fmt, u)
+        print(url, file=f)
+    ytdlp2.watch(fmt, url)
 
 
 def main():
@@ -147,8 +145,32 @@ def main():
     if "gf3dqjhn" in d:
         kill()
         print_server()
-        with open(HIST, 'r') as f:
-            d['m346bpv6'][1] = f.readlines()[-1]
+        # https://stackoverflow.com/a/54278929
+        # https://stackoverflow.com/a/713814
+        # with open(HIST, 'r') as f:
+        #     d['m346bpv6'][1] = f.readlines()[-1]
+        try:
+            f = open(HIST, 'rb')
+        except FileNotFoundError as fe:
+            print(fe)
+            return
+        else:
+            with f:
+                f.seek(-1, os.SEEK_END)
+                assert f.read(1) == b'\n'
+                u = bytearray()
+                while True:
+                    try:
+                        f.seek(-2, os.SEEK_CUR)
+                    except OSError as oe:
+                        assert oe.errno == 22
+                        break
+                    b = f.read(1)
+                    if b == b'\n':
+                        break
+                    u = b + u
+                d['m346bpv6'][1] = u.decode('utf-8')
+                # print(f"..{u.decode('utf-8')}..")
         play(d)
         return
 
