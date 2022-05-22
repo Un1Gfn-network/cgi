@@ -1,11 +1,12 @@
 #!/bin/python3
 
 import os
-import pprint
+import posix
 import pwd
 import subprocess
 import sys
 import urllib.parse
+from pprint import pprint
 
 # sys.path.insert(1, '/path/to/application/app/folder')
 import ytdlp2
@@ -30,6 +31,7 @@ def parse():
     # https://stackoverflow.com/questions/4906977
     # print_server(f"REQUEST_URI  = '{os.environ['REQUEST_URI']}'")
     # print_server(f"QUERY_STRING = '{os.environ['QUERY_STRING']}'")
+    # os.environ[b'QUERY_STRING'].decode("utf-8")
     return urllib.parse.parse_qs(
         qs=os.environ['QUERY_STRING'],
         keep_blank_values=True,
@@ -41,17 +43,17 @@ def parse():
     )
 
 
-def dropuser():
+def drop_privilege():
 
     # https://stackoverflow.com/a/6037494/
     # https://docs.python.org/3/library/subprocess.html#subprocess.Popen
-    g, u, r = os.getgid(), os.getuid(), pwd.getpwnam(USER)
+    g, u, r = posix.getgid(), posix.getuid(), pwd.getpwnam(USER)
 
     # drop privilege
     if (g, u) != (r.pw_gid, r.pw_uid):
         assert (g, u) == (0, 0)
-        os.setgid(r.pw_gid)
-        os.setuid(r.pw_uid)
+        posix.setgid(r.pw_gid)
+        posix.setuid(r.pw_uid)
 
 
 def env():
@@ -92,7 +94,8 @@ def play(d):
     assert type(d) == dict
     assert len(d) == 2
 
-    t = d['m346bpv6']       # get the name group containing resolution and url
+    # get the name group containing resolution and url
+    t = d['m346bpv6']
     assert type(t) == list
     assert len(t) == 2
 
@@ -102,6 +105,8 @@ def play(d):
             'ext': "mp4",
             'protocol': "m3u8_native",
             'video_ext': "mp4" }
+    # pprint(d, stream=sys.stderr)
+    # print_server()
     match t[0]:
         case "upcl8r46": fmt |= { 'format_id':  "91", 'width':  256, 'height':  144, 'fps': 30, 'vcodec': "avc1.4d400c", 'acodec': "mp4a.40.5" }
         case "b4bk2eut": fmt |= { 'format_id':  "92", 'width':  426, 'height':  240, 'fps': 30, 'vcodec': "avc1.4d4015", 'acodec': "mp4a.40.5" }
@@ -129,15 +134,18 @@ def main():
 
     # http header
     print_html("Content-Type: text/plain; charset=utf-8\n")
-    # print_html('Hello 歡迎')
+    # http content from now on
 
     print_server()
 
     d = parse()
-    dropuser()
+    drop_privilege()
     env()
 
     if "ef1lc1gh" in d:
+        # pprint(d, stream=sys.stderr)
+        if '3v5zug7y' in d:
+            subprocess.run(['xrandr', '--output', 'DP-1', '--off']).returncode
         kill()
         print_server()
         return
@@ -170,7 +178,6 @@ def main():
                         break
                     u = b + u
                 d['m346bpv6'][1] = u.decode('utf-8')
-                # print(f"..{u.decode('utf-8')}..")
         play(d)
         return
 
@@ -199,26 +206,9 @@ if __name__ == "__main__":
 #             print_html(p.volume_get_all_chans(s))
 #             print(pulse.volume_get_all_chans(s))
 
+
 # if 'sz3nb58f' in d:
 # with UnixUser(1000):
 #     with pulsectl.Pulse('hololive-pulse-client') as p:
 #             # ...
 #             pulse.volume_set_all_chans(s,0.78)
-
-# print_server(d)
-# for i in d:
-#     print_server(type(i))
-#     print_server(f"###[{i[0]}]###")
-#     print_server()
-#     print_server(f"###{i[1]}###")
-#     print_server()
-
-# https://stackoverflow.com/q/5574702
-# https://stackoverflow.com/a/37376668
-# from os import write
-# write(2,b"\n")
-# write(2,d[0][0].encode())
-# write(2,b"\n")
-# write(2,d[0][1].encode())
-# write(2,b"\n")
-# write(2,b"\n")

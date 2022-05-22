@@ -3,6 +3,7 @@
 import datetime
 import pprint
 import re
+import requests
 import subprocess
 import sys
 import yt_dlp
@@ -10,6 +11,7 @@ import yt_dlp
 # JSON = "/tmp/ytdlp.json"
 
 ytdlpobj = None
+BROWSER = 'chromium'
 
 def eprint(*x):
 
@@ -34,6 +36,23 @@ def canonicalize(url):
         return url
 
     return str("")
+
+
+def ipapi():
+
+    with requests.get("https://ipinfo.io") as r:
+        j = r.json()
+    pprint.pprint(j, stream=sys.stderr)
+    return j['ip']
+
+
+def hls2ip(s):
+
+    regex = "https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/[0-9]+/ei/[-0-9A-Z_a-z]+/ip/" + \
+            "(" + r"[0-9]+\." * 3 \
+                + "[0-9]+" + \
+            ")" + "/"
+    return re.search(regex, s).group(1)
 
 
 def watch(fmt: dict, url: str):
@@ -64,7 +83,7 @@ def watch(fmt: dict, url: str):
             #         eprint(f"{i}, {fmt[i]}, {f[i]}")
             #         assert False
             # https://stackoverflow.com/questions/9323749/how-to-check-if-one-dictionary-is-a-subset-of-another-larger-dictionary
-            assert fmt.items() <= f.items()
+            assert f.items() >= fmt.items()
             m3u8 = f['url']
             break
     assert 10 <= len(m3u8)
@@ -82,10 +101,11 @@ def watch(fmt: dict, url: str):
             f"--title=tv",
             m3u8]
     eprint(":;", *args, "\n")
-    subprocess.run(args, stdout=sys.stderr)
 
-    # https://stackoverflow.com/questions/13432717/enter-interactive-mode-in-python
-    # code.interact(local=locals())
+    if (hls2ip(m3u8), None) != (ipapi(), eprint()):
+        raise ValueError(f"ip mismatch, try playing {url} in {BROWSER} for a short while beforing launching")
+
+    subprocess.run(args, stdout=sys.stderr)
 
 
 def init():
@@ -96,7 +116,7 @@ def init():
         'verbose': True,
         'quiet': False,
         'no_warnings': False,
-        'cookiesfrombrowser': ('chromium',)
+        'cookiesfrombrowser': (BROWSER,)
     },auto_init=True)
 
 
